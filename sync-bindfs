@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Sync from /mnt/host via remapped /mnt/bind to /mnt/app.
+
+bindfs_options="--map=$HOST_UID/$APP_UID:@$HOST_GID/@$APP_GID /sync-host /sync-bind"
+bindfs $bindfs_options || (echo "Failed to bindfs $line" && exit 1)
+
+unison_options="-batch -owner -group -times $UNISON_OPTIONS"
+if [ "$UNISON_WATCH" -eq 1 ]; then
+    unison_options="-repeat watch $unison_options"
+fi
+sh -c "unison /sync-bind /sync-app $unison_options"
