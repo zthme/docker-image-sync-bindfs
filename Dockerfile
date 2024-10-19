@@ -17,6 +17,7 @@ RUN apk update \
 RUN mkdir /sync-host /sync-bind /sync-app
 
 COPY sync-bindfs /bin/
+RUN chmod +x /bin/sync-bindfs
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
