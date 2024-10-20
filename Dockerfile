@@ -22,3 +22,6 @@ RUN chmod +x /bin/sync-bindfs
 ENTRYPOINT ["/sbin/tini", "--"]
 
 CMD ["sync-bindfs"]
+
+HEALTHCHECK --interval=5s --timeout=5s --start-period=10m \
+    CMD test "$(cat /sync-initial)" = 1
